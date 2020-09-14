@@ -193,3 +193,14 @@ Given the customer doesn't have connectivity
 ## Architecture
 
 ![Feed Loading Feature](feed_architecture.png)
+
+## Model Specs
+
+### Feed Image
+
+| Property      | Type                |
+|---------------|---------------------|
+| `id`          | `UUID`              |
+| `description` | `String` (optional) |
+| `location`    | `String` (optional) |
+| `url`	        | `URL`               |
