@@ -19,9 +19,11 @@ class URLSessionHTTPClient {
     struct UnexpectedValuesRepresentation: Error {}
     
     func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: url) { (_, _, error) in
+        session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
+            } else if let data = data, data.count > 0, let response = response as? HTTPURLResponse {
+                completion(.success(data, response))
             } else {
                 completion(.failure(UnexpectedValuesRepresentation()))
             }
@@ -31,13 +33,13 @@ class URLSessionHTTPClient {
 
 class URLSessionHTTPClientTests: XCTestCase {
     
-    override class func setUp() {
+    override func setUp() {
         super.setUp()
         
         URLProtocolStub.startInterceptingRequest()
     }
     
-    override class func tearDown() {
+    override func tearDown() {
         super.tearDown()
         
         URLProtocolStub.stopInterceptingRequest()
@@ -48,7 +50,8 @@ class URLSessionHTTPClientTests: XCTestCase {
         let url = anyURL()
         
         let exp = expectation(description: "Wait for request")
-        URLProtocolStub.observeRequest { request in
+        
+        URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             XCTAssertEqual(request.httpMethod, "GET")
             
@@ -62,7 +65,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_getFromURL_failsOnRequestError() {
-        let requestError = NSError(domain: "any Error", code: 0, userInfo: nil)
+        let requestError = anyNSError()
         
         let receivedError = resultErrorFor(data: nil, response: nil, error: requestError)
         
@@ -80,6 +83,30 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
+    }
+    
+    func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        
+        URLProtocolStub.stub(data: data, response: response, error: nil)
+        
+        let exp = expectation(description: "Wait for completion")
+        
+        makeSUT().get(from: anyURL()) { result in
+            switch result {
+            case let .success(receivedData, receivedResponse):
+                XCTAssertEqual(receivedData, data)
+                XCTAssertEqual(receivedResponse.url, response?.url)
+                XCTAssertEqual(receivedResponse.statusCode, response?.statusCode)
+            default:
+                XCTFail("Expected to get succeed, got \(result) instead")
+            }
+
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 0.1)
+        
     }
     
     //MARK: - Helpers
@@ -145,8 +172,8 @@ class URLSessionHTTPClientTests: XCTestCase {
             URLProtocolStub.stub = Stub(data: data, response: response, error: error)
         }
         
-        static func observeRequest(observer: @escaping (URLRequest) -> Void) {
-            URLProtocolStub.requestObserver = observer
+        static func observeRequests(observer: @escaping (URLRequest) -> Void) {
+            requestObserver = observer
         }
         
         static func startInterceptingRequest() {
@@ -156,10 +183,11 @@ class URLSessionHTTPClientTests: XCTestCase {
         static func stopInterceptingRequest() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
+            requestObserver = nil
         }
         
         override class func canInit(with request: URLRequest) -> Bool {
-            URLProtocolStub.requestObserver?(request)
+            requestObserver?(request)
             return true
         }
         
