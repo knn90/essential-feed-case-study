@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/knn90/essential-feed-case-study.svg?branch=master)](https://travis-ci.com/knn90/essential-feed-case-study)
-
 # Essential Feed App – Image Feed Feature
+
+[![Build Status](https://travis-ci.com/knn90/essential-feed-case-study.svg?branch=master)](https://travis-ci.com/knn90/essential-feed-case-study)
 
 ## BDD Specs
 
