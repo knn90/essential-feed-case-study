@@ -50,8 +50,12 @@ class CodableFeedStore {
             return completion(.empty)
         }
         
-        let cache = try! JSONDecoder().decode(Cache.self, from: data)
-        completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
+        do {
+            let cache = try JSONDecoder().decode(Cache.self, from: data)
+            completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
     func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping (FeedStore.InsertionCompletion)) {
@@ -108,6 +112,14 @@ class CodableFeedStoreTests: XCTestCase {
         expect(sut, toRetrieveTwice: .found(feed: feed.local, timestamp: timestamp))
     }
     
+    func test_retrieve_deliversFailureOnRetrievalError() {
+        let sut = makeSUT()
+        
+        try! "invalid Data".write(to: testSpecificStoreURL(), atomically: false, encoding: .utf8)
+        
+        expect(sut, toRetrieve: .failure(anyNSError()))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> CodableFeedStore {
         
@@ -133,11 +145,12 @@ class CodableFeedStoreTests: XCTestCase {
         sut.retrieve() { retrievedResult in
             switch (retrievedResult, expectedResult) {
             case (.empty, .empty): break
+            case (.failure, .failure): break
             case let (.found(retrievedFeed, retrievedTimestamp), .found(expectedFeed, expectedTimestamp)):
-                XCTAssertEqual(retrievedFeed, expectedFeed)
-                XCTAssertEqual(retrievedTimestamp, expectedTimestamp)
+                XCTAssertEqual(retrievedFeed, expectedFeed, file: file, line: line)
+                XCTAssertEqual(retrievedTimestamp, expectedTimestamp, file: file, line: line)
             default:
-                XCTFail("Expected to get \(expectedResult), got \(retrievedResult) instead")
+                XCTFail("Expected to get \(expectedResult), got \(retrievedResult) instead", file: file, line: line)
             }
             exp.fulfill()
         }
