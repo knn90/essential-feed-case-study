@@ -36,6 +36,9 @@
 		6AED9C7D250FBE2200A3F327 /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 6AED9C6F250FBE2200A3F327 /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6AED9C87250FBE4A00A3F327 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED9C86250FBE4A00A3F327 /* FeedItem.swift */; };
 		6AED9C89250FBF7D00A3F327 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AED9C88250FBF7D00A3F327 /* FeedLoader.swift */; };
+		6AF0C52A255455C000D014FE /* FeedStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6AF0C528255455C000D014FE /* FeedStore.xcdatamodeld */; };
+		6AF0C52F2554566800D014FE /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF0C52E2554566800D014FE /* ManagedCache.swift */; };
+		6AF0C534255456F000D014FE /* ManagedFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF0C533255456F000D014FE /* ManagedFeedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@
 		6AED9C7C250FBE2200A3F327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6AED9C86250FBE4A00A3F327 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 		6AED9C88250FBF7D00A3F327 /* FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
+		6AF0C529255455C000D014FE /* FeedStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FeedStore.xcdatamodel; sourceTree = "<group>"; };
+		6AF0C52E2554566800D014FE /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
+		6AF0C533255456F000D014FE /* ManagedFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedFeedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +220,7 @@
 		6AED9C6E250FBE2200A3F327 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
+				6AF0C5272554559100D014FE /* CoreData */,
 				6A8B7F3025411FD500A2C9D2 /* Feed Cache */,
 				6AB491A225126053008C86E0 /* Feed API */,
 				6AED9C8A250FC0B500A3F327 /* Feed Feature */,
@@ -241,6 +248,16 @@
 				6AED9C88250FBF7D00A3F327 /* FeedLoader.swift */,
 			);
 			path = "Feed Feature";
+			sourceTree = "<group>";
+		};
+		6AF0C5272554559100D014FE /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6AF0C528255455C000D014FE /* FeedStore.xcdatamodeld */,
+				6AF0C52E2554566800D014FE /* ManagedCache.swift */,
+				6AF0C533255456F000D014FE /* ManagedFeedImage.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,7 +427,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF0C534255456F000D014FE /* ManagedFeedImage.swift in Sources */,
+				6AF0C52A255455C000D014FE /* FeedStore.xcdatamodeld in Sources */,
 				6A88533325494BF200816F94 /* CodableFeedStoreTests.swift in Sources */,
+				6AF0C52F2554566800D014FE /* ManagedCache.swift in Sources */,
 				6A4A2C2B2546799000A8BB14 /* FeedCacheTestHelpers.swift in Sources */,
 				6A4A2C262546740300A8BB14 /* ValidateFeedCacheUseCaseTests.swift in Sources */,
 				6A02F1402511110300313C5F /* LoadFeedFromRemoteUseCaseTests.swift in Sources */,
@@ -721,6 +741,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		6AF0C528255455C000D014FE /* FeedStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6AF0C529255455C000D014FE /* FeedStore.xcdatamodel */,
+			);
+			currentVersion = 6AF0C529255455C000D014FE /* FeedStore.xcdatamodel */;
+			path = FeedStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6AED9C63250FBE2200A3F327 /* Project object */;
 }
