@@ -26,9 +26,9 @@ public class CoreDataFeedStore: FeedStore {
                 context.delete(cache)
                 try! context.save()
             }
-            
+            completion(nil)
         }
-        completion(nil)
+        
     }
     
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping (InsertionCompletion)) {
