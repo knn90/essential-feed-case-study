@@ -11,6 +11,11 @@ import XCTest
 import EssentialFeed
 
 class CoreDataFeedStore: FeedStore {
+    
+    init() {
+        
+    }
+    
     func deleteCachedFeed(completion: @escaping DeletionCompletion) {
         
     }
@@ -20,13 +25,14 @@ class CoreDataFeedStore: FeedStore {
     }
     
     func retrieve(completion: @escaping RetrievalCompletion) {
-        
+        completion(.empty)
     }
 }
 
 class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     func test_retrieve_deliversEmptyOnEmptyCache() {
-        
+        let sut = makeSUT()
+        assertThatRetrieveDeliversEmptyOnEmptyCache(on: sut)
     }
     
     func test_retrieve_hasNoSideEffectOnEmptyCache() {
