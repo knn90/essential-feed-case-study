@@ -19,50 +19,39 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        let context = self.context
-        context.perform {
-            do {
-                if let cache = try ManagedCache.find(in: context) {
-                    context.delete(cache)
-                    try context.save()
-                }
-                completion(.success(()))
-            } catch {
-                completion(.failure(error))
-            }
+        perform { context in 
+            completion(Result {
+                try ManagedCache.find(in: context)
+                    .map(context.delete)
+                    .map(context.save)
+            })
         }
-        
     }
     
     public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping (InsertionCompletion)) {
-        let context = self.context
-        context.perform {
-            do {
+        perform { context in
+            completion(Result {
                 let managedCache = try ManagedCache.newUniqueInstance(in: context)
                 managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
                 managedCache.timestamp = timestamp
                 try context.save()
-                completion(.success(()))
-            } catch {
-                completion(.failure(error))
-            }
-            
+            })
         }
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        let context = self.context
-        context.perform {
-            do {
-                if let cache = try ManagedCache.find(in: context) {
-                    completion(.success(CachedFeed(feed: cache.localFeed, timestamp: cache.timestamp)))
-                } else {
-                    completion(.success(.none))
+        perform { context in
+            completion(Result {
+                try ManagedCache.find(in: context).map {
+                    return CachedFeed(feed: $0.localFeed, timestamp: $0.timestamp)
                 }
-            } catch {
-                completion(.failure(error))
-            }
+            })
         }
+    }
+    
+    private func perform(_ action: @escaping (NSManagedObjectContext) -> Void) {
+        let context = self.context
+        context.perform { action(context) }
     }
 }
 
