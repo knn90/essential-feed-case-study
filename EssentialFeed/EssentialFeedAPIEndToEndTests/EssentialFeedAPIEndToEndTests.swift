@@ -31,7 +31,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
         }
     }
     
-    private func getFeedResult(file: StaticString = #file, line: UInt = #line) -> LoadFeedResult? {
+    private func getFeedResult(file: StaticString = #file, line: UInt = #line) -> FeedLoader.Result? {
         let url = URL(string: "https://static1.squarespace.com/static/5891c5b8d1758ec68ef5dbc2/t/5c52cdd0b8a045df091d2fff/1548930512083/feed-case-study-test-api-feed.json")!
         let client = URLSessionHTTPClient(session: .init(configuration: .ephemeral))
         let sut = RemoteFeedLoader(url: url, client: client)
@@ -40,7 +40,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         
         let exp = expectation(description: "Wait for load completion")
-        var receivedResult: LoadFeedResult?
+        var receivedResult: FeedLoader.Result?
         sut.load { result in
             receivedResult = result
             exp.fulfill()
