@@ -104,8 +104,8 @@ Location</string>
                                     <constraints>
                                         <constraint firstItem="R3X-Dx-wBm" firstAttribute="leading" secondItem="nHp-0V-tZ3" secondAttribute="leadingMargin" id="1zk-VD-Y4o"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="R3X-Dx-wBm" secondAttribute="trailing" id="8C5-d0-5Rv"/>
-                                        <constraint firstItem="R3X-Dx-wBm" firstAttribute="top" secondItem="nHp-0V-tZ3" secondAttribute="topMargin" constant="6" id="Xyo-iD-CAY"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="R3X-Dx-wBm" secondAttribute="bottom" constant="6" id="lwW-N6-XQb"/>
+                                        <constraint firstItem="R3X-Dx-wBm" firstAttribute="top" secondItem="nHp-0V-tZ3" secondAttribute="topMargin" priority="999" constant="6" id="Xyo-iD-CAY"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="R3X-Dx-wBm" secondAttribute="bottom" priority="999" constant="6" id="lwW-N6-XQb"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
