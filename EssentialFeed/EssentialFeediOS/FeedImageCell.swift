@@ -15,4 +15,5 @@ public final class FeedImageCell: UITableViewCell {
     public var descriptionLabel = UILabel()
     public var imageContainer = UIView()
     public var feedImageView = UIImageView()
+    public var feedImageRetryButton = UIButton()
 }
