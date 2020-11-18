@@ -10,6 +10,7 @@ import UIKit
 import EssentialFeed
 
 class FeedImageCellViewModel {
+    typealias Observer<T> = (T) -> Void
     let model: FeedImage
     let imageLoader: FeedImageDataLoader
     var task: FeedImageDataLoaderTask?
@@ -19,52 +20,27 @@ class FeedImageCellViewModel {
         self.imageLoader = imageLoader
     }
     
-    var image: UIImage? {
-        switch state {
-        case let .loaded(image): return image
-        default: return nil
-        }
-    }
+    var onImageLoad: (Observer<UIImage>)?
+    var onImageLoadingStateChange: (Observer<Bool>)?
+    var onShouldRetryImageLoadingStateChange: (Observer<Bool>)?
     
-    var isLoading: Bool {
-        return state == .loading
-    }
-    
-    var locationString: String? {
+    var location: String? {
         return model.location
     }
     
-    var descriptionString: String? {
+    var hasLocation: Bool {
+        return model.location != nil
+    }
+    
+    var description: String? {
         return model.description
     }
     
-    var retryActionVisible: Bool {
-        return state == .failed
-    }
-    
-    enum State: Equatable {
-        case pending
-        case loading
-        case loaded(UIImage)
-        case failed
-    }
-    
-    private var state: State = .pending {
-        didSet {
-            onChange?(self)
-        }
-    }
-    
-    var onChange: ((FeedImageCellViewModel) -> Void)?
-    
     func loadImageData() {
-        state = .loading
+        onImageLoadingStateChange?(true)
+        onShouldRetryImageLoadingStateChange?(false)
         task = imageLoader.loadImageData(from: model.url) { [weak self] result in
-            if let data = try? result.get(), let image = UIImage(data: data) {
-                self?.state = .loaded(image)
-            } else {
-                self?.state = .failed
-            }
+            self?.handle(result: result)
         }
     }
     
@@ -74,5 +50,14 @@ class FeedImageCellViewModel {
     
     func cancelLoad() {
         task?.cancel()
+    }
+    
+    private func handle(result: FeedImageDataLoader.Result) {
+        if let image = (try? result.get()).flatMap(UIImage.init) {
+            self.onImageLoad?(image)
+        } else {
+            self.onShouldRetryImageLoadingStateChange?(true)
+        }
+        self .onImageLoadingStateChange?(false)
     }
 }
