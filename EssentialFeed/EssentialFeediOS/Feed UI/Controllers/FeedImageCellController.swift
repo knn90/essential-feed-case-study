@@ -9,10 +9,10 @@
 import UIKit
 
 final class FeedImageCellController: NSObject, FeedImageView {
-    private let presenter: FeedImagePresenter<FeedImageCellController, UIImage>
-    lazy var view: FeedImageCell = FeedImageCell()
+    private let presenter: FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>
+    private lazy var view: FeedImageCell = FeedImageCell()
     
-    init(presenter: FeedImagePresenter<FeedImageCellController, UIImage>) {
+    init(presenter: FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>) {
         self.presenter = presenter
     }
     

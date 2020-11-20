@@ -31,7 +31,7 @@ class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
     private let imageTransformer: (Data) -> Image?
     
     private var task: FeedImageDataLoaderTask?
-    weak var feedImageView: View?
+    var feedImageView: View?
     
     init(model: FeedImage, imageLoader: FeedImageDataLoader, imageTransformer: @escaping (Data) -> Image?) {
         self.model = model
