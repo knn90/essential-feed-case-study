@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol FeedImageCellControllerDelegate {
+    func didRequestImage()
+    func didCancelImageRequest()
+}
+
 final class FeedImageCellController: NSObject, FeedImageView {
-    private let presenter: FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>
     private lazy var view: FeedImageCell = FeedImageCell()
+    private let delegate: FeedImageCellControllerDelegate
     
-    init(presenter: FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>) {
-        self.presenter = presenter
+    init(delegate: FeedImageCellControllerDelegate) {
+        self.delegate = delegate
     }
     
     func display(_ viewModel: FeedImageViewModel<UIImage>) {
@@ -27,21 +32,20 @@ final class FeedImageCellController: NSObject, FeedImageView {
             view.feedImageContainer.stopShimmering()
         }
         view.feedImageRetryButton.isHidden = !viewModel.shouldRetry
+        view.onRetry = delegate.didRequestImage
     }
     
     func loadView() -> FeedImageCell {
-        
-        view.onRetry = presenter.loadImageData
-        presenter.loadImageData()
+        delegate.didRequestImage()
         return view
     }
     
     func preload() {
-        presenter.preload()
+        delegate.didRequestImage()
     }
 
     func cancelLoad() {
-        presenter.cancelLoad()
+        delegate.didCancelImageRequest()
     }
 
 }

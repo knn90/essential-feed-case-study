@@ -57,9 +57,13 @@ private final class FeedViewAdapter: FeedView {
     
     func display(_ viewModel: FeedViewModel) {
         feedViewController?.tableModel = viewModel.feed.map {
-            let presenter = FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: $0, imageLoader: imageLoader, imageTransformer: UIImage.init)
-            let controller = FeedImageCellController(presenter: presenter)
-            presenter.feedImageView = WeakRefVirtualProxy(controller)
+            
+            let adapter = FeedImageLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: $0, imageLoader: imageLoader)
+            
+            let controller = FeedImageCellController(delegate: adapter)
+            
+            let presenter = FeedImagePresenter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(feedImageView: WeakRefVirtualProxy(controller),imageTransformer: UIImage.init)
+            adapter.presenter = presenter
             return controller
         }
 
@@ -84,5 +88,36 @@ private final class FeedLoaderPresentationAdapter: FeedRefreshViewControllerDele
                 self?.feedPresenter?.didFinishLoadingFeed(with: error)
             }
         }
+    }
+}
+
+private final class FeedImageLoaderPresentationAdapter<View: FeedImageView, Image>: FeedImageCellControllerDelegate where View.Image == Image {
+    private let model: FeedImage
+    private let imageLoader: FeedImageDataLoader
+    private var task: FeedImageDataLoaderTask?
+    
+    var presenter: FeedImagePresenter<View, Image>?
+    
+    init(model: FeedImage, imageLoader: FeedImageDataLoader) {
+        self.model = model
+        self.imageLoader = imageLoader
+    }
+    
+    func didRequestImage() {
+        let model = self.model
+        presenter?.didStartLoadingImage(for: model)
+        task = imageLoader.loadImageData(from: model.url) { [weak self] result in
+            switch result {
+            case let .success(data):
+                self?.presenter?.didFinishLoadingImageData(with: data, for: model)
+                
+            case let .failure(error):
+                self?.presenter?.didFinishLoadingImageData(with: error, for: model)
+            }
+        }
+    }
+    
+    func didCancelImageRequest() {
+        task?.cancel()
     }
 }
