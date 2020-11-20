@@ -40,6 +40,12 @@ extension WeakRefVirtualProxy: FeedLoadingView where T: FeedLoadingView {
     }
 }
 
+extension WeakRefVirtualProxy: FeedImageView where T: FeedImageView, T.Image == UIImage {
+    func display(_ model: FeedImageViewModel<UIImage>) {
+        object?.display(model)
+    }
+}
+
 private final class FeedViewAdapter: FeedView {
     private weak var feedViewController: FeedViewController?
     private var imageLoader: FeedImageDataLoader
@@ -51,8 +57,10 @@ private final class FeedViewAdapter: FeedView {
     
     func display(_ viewModel: FeedViewModel) {
         feedViewController?.tableModel = viewModel.feed.map {
-            let feedImageCellViewModel =  FeedImageCellViewModel(model: $0, imageLoader: imageLoader, imageTransformer: UIImage.init)
-            return FeedImageCellController(viewModel: feedImageCellViewModel)
+            let presenter = FeedImagePresenter<FeedImageCellController, UIImage>(model: $0, imageLoader: imageLoader, imageTransformer: UIImage.init)
+            let controller = FeedImageCellController(presenter: presenter)
+            presenter.feedImageView = controller
+            return controller
         }
 
     }
