@@ -25,12 +25,14 @@ final class FeedImageCellController: NSObject, FeedImageView {
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
-        cell?.feedImageView.image = viewModel.image
+        cell?.feedImageView.setImageAnimated(viewModel.image)
+        
         if viewModel.isLoading {
             cell?.feedImageContainer.startShimmering()
         } else {
             cell?.feedImageContainer.stopShimmering()
         }
+        
         cell?.feedImageRetryButton.isHidden = !viewModel.shouldRetry
         cell?.onRetry = delegate.didRequestImage
     }
@@ -44,15 +46,14 @@ final class FeedImageCellController: NSObject, FeedImageView {
     func preload() {
         delegate.didRequestImage()
     }
-
+    
     func cancelLoad() {
         releaseCellForReuse()
         delegate.didCancelImageRequest()
     }
-
+    
     private func releaseCellForReuse() {
         cell = nil
     }
 }
-
 
