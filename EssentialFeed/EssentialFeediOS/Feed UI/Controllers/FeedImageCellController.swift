@@ -26,13 +26,7 @@ final class FeedImageCellController: NSObject, FeedImageView {
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
         cell?.feedImageView.setImageAnimated(viewModel.image)
-        
-        if viewModel.isLoading {
-            cell?.feedImageContainer.startShimmering()
-        } else {
-            cell?.feedImageContainer.stopShimmering()
-        }
-        
+        cell?.feedImageContainer.isShimmering = viewModel.isLoading
         cell?.feedImageRetryButton.isHidden = !viewModel.shouldRetry
         cell?.onRetry = delegate.didRequestImage
     }
