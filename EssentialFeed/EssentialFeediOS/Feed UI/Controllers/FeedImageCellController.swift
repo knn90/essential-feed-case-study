@@ -14,7 +14,7 @@ protocol FeedImageCellControllerDelegate {
 }
 
 final class FeedImageCellController: NSObject, FeedImageView {
-    private lazy var view: FeedImageCell = FeedImageCell()
+    private var cell: FeedImageCell?
     private let delegate: FeedImageCellControllerDelegate
     
     init(delegate: FeedImageCellControllerDelegate) {
@@ -22,22 +22,24 @@ final class FeedImageCellController: NSObject, FeedImageView {
     }
     
     func display(_ viewModel: FeedImageViewModel<UIImage>) {
-        view.locationContainer.isHidden = !viewModel.hasLocation
-        view.locationLabel.text = viewModel.location
-        view.descriptionLabel.text = viewModel.description
-        view.feedImageView.image = viewModel.image
+        cell?.locationContainer.isHidden = !viewModel.hasLocation
+        cell?.locationLabel.text = viewModel.location
+        cell?.descriptionLabel.text = viewModel.description
+        cell?.feedImageView.image = viewModel.image
         if viewModel.isLoading {
-            view.feedImageContainer.startShimmering()
+            cell?.feedImageContainer.startShimmering()
         } else {
-            view.feedImageContainer.stopShimmering()
+            cell?.feedImageContainer.stopShimmering()
         }
-        view.feedImageRetryButton.isHidden = !viewModel.shouldRetry
-        view.onRetry = delegate.didRequestImage
+        cell?.feedImageRetryButton.isHidden = !viewModel.shouldRetry
+        cell?.onRetry = delegate.didRequestImage
     }
     
-    func loadView() -> FeedImageCell {
+    func view(in tableView: UITableView) -> FeedImageCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedImageCell") as! FeedImageCell
+        self.cell = cell
         delegate.didRequestImage()
-        return view
+        return cell
     }
     
     func preload() {
@@ -45,7 +47,11 @@ final class FeedImageCellController: NSObject, FeedImageView {
     }
 
     func cancelLoad() {
+        releaseCellForReuse()
         delegate.didCancelImageRequest()
     }
 
+    private func releaseCellForReuse() {
+        cell = nil
+    }
 }
