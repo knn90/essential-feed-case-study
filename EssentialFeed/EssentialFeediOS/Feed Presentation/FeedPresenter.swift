@@ -13,8 +13,6 @@ protocol FeedLoadingView {
     func display(_ viewModel: FeedLoadingViewModel)
 }
 
-
-
 protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
