@@ -35,4 +35,3 @@ public final class FeedUIComposer {
         return feedViewController
     }
 }
-
