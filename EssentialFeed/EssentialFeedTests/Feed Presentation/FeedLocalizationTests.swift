@@ -10,8 +10,6 @@ import Foundation
 import XCTest
 import EssentialFeed
 
-@testable import EssentialFeediOS
-
 class FeedLocalizationTests: XCTestCase {
     func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalisations() {
         let table = "Feed"
