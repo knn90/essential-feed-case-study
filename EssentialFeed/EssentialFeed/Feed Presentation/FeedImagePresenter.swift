@@ -13,18 +13,6 @@ public protocol FeedImageView: class {
     func display(_ model: FeedImageViewModel<Image>)
 }
 
-public struct FeedImageViewModel<Image> {
-    public let description: String?
-    public let location: String?
-    public let image: Image?
-    public let isLoading: Bool
-    public let shouldRetry: Bool
-    
-    public var hasLocation: Bool {
-        return location != nil
-    }
-}
-
 public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
     private let feedImageView: View
     private let imageTransformer: (Data) -> Image?
