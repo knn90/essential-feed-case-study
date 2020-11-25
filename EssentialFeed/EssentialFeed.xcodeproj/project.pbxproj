@@ -312,12 +312,10 @@
 		6A2723D32562C346007F6243 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A3325CD256E3C91009E04B6 /* Helpers */,
 				6AD9CCF22560F18F00EF4131 /* FeedImageCell.swift */,
-				6AD9CCF925611F9100EF4131 /* UIView+Shimmering.swift */,
 				6A1E5F8A2568EA480076A0B2 /* Feed.storyboard */,
 				6A1E5F912568FDDF0076A0B2 /* Feed.xcassets */,
-				6A1E5F9D256909D80076A0B2 /* UITableView+Dequeueing.swift */,
-				6A1E5FA925690B370076A0B2 /* UIImageView+Animations.swift */,
 				6A3325C6256E34F4009E04B6 /* ErrorView.swift */,
 			);
 			path = Views;
@@ -380,6 +378,16 @@
 				6A1E6011256960400076A0B2 /* FeedViewAdapter.swift */,
 			);
 			path = Composers;
+			sourceTree = "<group>";
+		};
+		6A3325CD256E3C91009E04B6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6AD9CCF925611F9100EF4131 /* UIView+Shimmering.swift */,
+				6A1E5F9D256909D80076A0B2 /* UITableView+Dequeueing.swift */,
+				6A1E5FA925690B370076A0B2 /* UIImageView+Animations.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		6A3F221E255D81B3002BC821 /* EssentialFeediOS */ = {
