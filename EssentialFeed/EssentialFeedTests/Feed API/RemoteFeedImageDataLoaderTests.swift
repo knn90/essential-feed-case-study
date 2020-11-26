@@ -23,11 +23,13 @@ final class RemoteFeedImageDataLoader {
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) {
         client.get(from: url) { result in
             switch result {
-            case .success:
-                completion(.failure(Error.invalidData))
+            case let .success((data, response)):
+                guard response.statusCode == 200, data.count > 0 else {
+                    return completion(.failure(Error.invalidData))
+                }
+                completion(.success(data))
             case let .failure(error):
                 completion(.failure(error))
-            
             }
         }
     }
@@ -78,6 +80,21 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         }
     }
     
+    func test_loadImageData_deliverInvalidDataOn200HTTPResponseWithEmptyData() {
+        let (sut, client) = makeSUT()
+        expect(sut, toCompleteWithResult: .failure(RemoteFeedImageDataLoader.Error.invalidData)) {
+            client.complete(withStatusCode: 200, data: Data())
+        }
+    }
+    
+    func test_loadImageData_deliversSuccessOn200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        let data = anyData()
+        expect(sut, toCompleteWithResult: .success(data)) {
+            client.complete(withStatusCode: 200, data: data)
+        }
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -97,6 +114,8 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
             switch (expectedResult, receivedResult) {
             case let (.failure(expectedError), .failure(receivedError)):
                 XCTAssertEqual(expectedError as NSError?, receivedError as NSError?, file: file, line: line)
+            case let (.success(expectedData), .success(receivedData)):
+                XCTAssertEqual(expectedData, receivedData)
             default:
                 XCTFail("Expected to get \(expectedResult), got \(receivedResult) instead")
             }
