@@ -16,8 +16,14 @@ final class RemoteFeedImageDataLoader {
         self.client = client
     }
     
-    func loadImageData(from url: URL) {
-        client.get(from: url) { _ in }
+    func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) {
+        client.get(from: url) { result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            default: break
+            }
+        }
     }
 }
 
@@ -32,7 +38,27 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         let (sut, client) = makeSUT()
         let url = anyURL()
         
-        sut.loadImageData(from: url)
+        sut.loadImageData(from: url) { _ in }
+        
+        XCTAssertEqual(client.requestedURLs, [url])
+    }
+    
+    func test_loadImageData_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        let url = anyURL()
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.loadImageData(from: url) { result in
+            switch result {
+            case .failure: break
+            default:
+                XCTFail("Expected to get failure, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        
+        client.complete(with: anyNSError())
+        wait(for: [exp], timeout: 1.0)
         
         XCTAssertEqual(client.requestedURLs, [url])
     }
@@ -50,9 +76,15 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     
     private class HTTPClientSpy: HTTPClient {
         var requestedURLs = [URL]()
+        var completions = [(HTTPClient.Result) -> Void]()
         
         func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
             requestedURLs.append(url)
+            completions.append(completion)
+        }
+        
+        func complete(with error: Error, at index: Int = 0) {
+            completions[0](.failure(error))
         }
     }
 }
