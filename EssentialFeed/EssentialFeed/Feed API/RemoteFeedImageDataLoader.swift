@@ -48,15 +48,13 @@ public final class RemoteFeedImageDataLoader: FeedImageDataLoader {
             
             guard self != nil else { return }
             
-            switch result {
-            case let .success((data, response)):
-                guard response.statusCode == 200, !data.isEmpty else {
-                    return task.complete(with: .failure(Error.invalidData))
-                }
-                task.complete(with: .success(data))
-            case .failure:
-                task.complete(with: .failure(Error.connectivity))
-            }
+            task.complete(
+                with: result
+                    .mapError { _ in Error.connectivity }
+                    .flatMap { (data, response) in
+                        let isValidResponse = response.statusCode == 200 && !data.isEmpty
+                        return isValidResponse ? .success(data) : .failure(Error.invalidData)
+                    })
         }
         
         return task
