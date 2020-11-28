@@ -71,7 +71,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     
     func test_loadImageData_doesNotDeliverResultAfterInstanceHasBeenDeallocated() {
         let client = HTTPClientSpy()
-        var sut: RemoteFeedImageDataLoader? = RemoteFeedImageDataLoader(client: client)
+        var sut: FeedImageDataLoader? = RemoteFeedImageDataLoader(client: client)
         
         var capturedResults: [FeedImageDataLoader.Result] = []
         sut?.loadImageData(from: anyURL(), completion: { capturedResults.append($0) })
@@ -108,7 +108,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
     }
     
     //MARK: - Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (RemoteFeedImageDataLoader, HTTPClientSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedImageDataLoader, HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedImageDataLoader(client: client)
         
@@ -118,7 +118,7 @@ final class RemoteFeedImageDataLoaderTests: XCTestCase {
         return (sut, client)
     }
     
-    private func expect(_ sut: RemoteFeedImageDataLoader, toCompleteWithResult expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedImageDataLoader, toCompleteWithResult expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let url = anyURL()
         
         let exp = expectation(description: "Wait for load completion")
