@@ -7,9 +7,27 @@
 //
 
 import XCTest
+import EssentialFeed
 
-class LocalFeedImageDataLoader {
-    init(store: Any) {}
+protocol FeedImageDataStore {
+    func retrieve(dataForURL url: URL)
+}
+
+class LocalFeedImageDataLoader: FeedImageDataLoader {
+    private struct Task: FeedImageDataLoaderTask {
+            func cancel() {}
+        }
+
+    let store: FeedImageDataStore
+    
+    init(store: FeedImageDataStore) {
+        self.store = store
+    }
+    
+    func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
+        store.retrieve(dataForURL: url)
+        return Task()
+    }
 }
 
 final class LocalFeedImageDataLoaderTests: XCTestCase {
@@ -20,14 +38,34 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         XCTAssertTrue(store.receivedMessages.isEmpty)
     }
     
+    func test_loadImageDataFromURL_requestStoredDataForURL() {
+        let (sut, loader) = makeSUT()
+        let url = anyURL()
+        _ = sut.loadImageData(from: url) { _ in }
+        
+        XCTAssertEqual(loader.receivedMessages, [.retrieve(dataFor: url)])
+    }
+    
     //MARK: - Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (LocalFeedImageDataLoader, FeedStoreSpy) {
-        let store = FeedStoreSpy()
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (LocalFeedImageDataLoader, StoreSpy) {
+        let store = StoreSpy()
         let sut = LocalFeedImageDataLoader(store: store)
         
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(store, file: file, line: line)
         
         return (sut, store)
+    }
+    
+    private class StoreSpy: FeedImageDataStore {
+        enum Message: Equatable {
+            case retrieve(dataFor: URL)
+        }
+        
+        private(set) var receivedMessages = [Message]()
+        
+        func retrieve(dataForURL url: URL) {
+            receivedMessages.append(.retrieve(dataFor: url))
+        }
     }
 }
