@@ -28,11 +28,19 @@ class LocalFeedImageDataLoader: FeedImageDataLoader {
     
     public enum Error: Swift.Error {
         case failed
+        case notFound
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {
         store.retrieve(dataForURL: url) { result in
-            completion(.failure(Error.failed))
+            
+            
+            completion(result
+                        .mapError { _ in Error.failed }
+                        .flatMap { data in
+                            data.map { .success($0) } ?? .failure(Error.notFound)
+                        })
+            
         }
         return Task()
     }
@@ -63,6 +71,14 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         }
     }
     
+    func test_loadImageDataFromURL_deliversImageDataOnFoundData() {
+        let (sut, store) = makeSUT()
+        let foundData = anyData()
+        expect(sut, toCompleteWith: .success(foundData)) {
+            store.complete(with: foundData)
+        }
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (LocalFeedImageDataLoader, StoreSpy) {
         let store = StoreSpy()
@@ -85,6 +101,8 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         _ = sut.loadImageData(from: anyURL()) { receivedResult in
             switch(expectedResult, receivedResult) {
             case (.failure, .failure): break
+            case let (.success(expectedData), .success(receivedData)):
+                XCTAssertEqual(expectedData, receivedData, "Expected to get \(expectedData), got \(receivedData) instead", file: file, line: line)
             default:
                 XCTFail("Expected to get \(expectedResult), got \(receivedResult) instead", file: file, line: line)
             }
@@ -111,5 +129,9 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
             completions[index](.failure(error))
         }
         
+        
+        func complete(with data: Data, at index: Int = 0) {
+            completions[index](.success(data))
+        }
     }
 }
