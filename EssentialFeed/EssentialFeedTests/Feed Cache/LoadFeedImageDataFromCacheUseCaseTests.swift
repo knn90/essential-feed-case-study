@@ -59,7 +59,7 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
     }
     
     func test_loadImageDataFromURL_doesNotDeliverResultAfterInstanceHasBeenDeallocated() {
-        let store = StoreSpy()
+        let store = FeedImageDataStoreSpy()
         var sut: LocalFeedImageDataLoader? = LocalFeedImageDataLoader(store: store)
         
         var received = [FeedImageDataLoader.Result]()
@@ -70,19 +70,10 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
         
         XCTAssertTrue(received.isEmpty, "Expected no received results after instance has been deallocated")
     }
-    
-    func test_saveImageDataForURL_requestsImageDataInsertionForURL() {
-        let (sut, store) = makeSUT()
-        let url = anyURL()
-        let data = anyData()
-        sut.save(data, for: url) { _ in }
-        
-        XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
-    }
-    
+
     //MARK: - Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (LocalFeedImageDataLoader, StoreSpy) {
-        let store = StoreSpy()
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (LocalFeedImageDataLoader, FeedImageDataStoreSpy) {
+        let store = FeedImageDataStoreSpy()
         let sut = LocalFeedImageDataLoader(store: store)
         
         trackForMemoryLeaks(sut, file: file, line: line)
@@ -111,33 +102,5 @@ final class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
         }
         action()
         wait(for: [exp], timeout: 1.0)
-    }
-    
-    private class StoreSpy: FeedImageDataStore {
-        
-        enum Message: Equatable {
-            case retrieve(dataFor: URL)
-            case insert(data: Data, for: URL)
-        }
-        
-        private(set) var receivedMessages = [Message]()
-        private var completions = [(FeedImageDataStore.RetrievalResult) -> Void]()
-        
-        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-            receivedMessages.append(.retrieve(dataFor: url))
-            completions.append(completion)
-        }
-        
-        func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
-            receivedMessages.append(.insert(data: data, for: url))
-        }
-        func complete(with error: Error, at index: Int = 0) {
-            completions[index](.failure(error))
-        }
-        
-        
-        func complete(with data: Data?, at index: Int = 0) {
-            completions[index](.success(data))
-        }
     }
 }
