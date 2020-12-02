@@ -92,7 +92,7 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
     }
     
     private func failed() -> FeedImageDataLoader.Result {
-        return .failure(LocalFeedImageDataLoader.Error.failed)
+        return .failure(LocalFeedImageDataLoader.LoadError.failed)
     }
     
     private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: LocalFeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
@@ -121,9 +121,9 @@ final class LocalFeedImageDataLoaderTests: XCTestCase {
         }
         
         private(set) var receivedMessages = [Message]()
-        private var completions = [(FeedImageDataStore.Result) -> Void]()
+        private var completions = [(FeedImageDataStore.RetrievalResult) -> Void]()
         
-        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.Result) -> Void) {
+        func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
             receivedMessages.append(.retrieve(dataFor: url))
             completions.append(completion)
         }
