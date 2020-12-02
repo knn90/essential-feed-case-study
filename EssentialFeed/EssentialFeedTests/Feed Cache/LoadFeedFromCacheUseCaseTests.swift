@@ -38,7 +38,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         expect(sut, toCompleteWith: .success([]), when: {
-            store.completeRetrievalEmptyCache()
+            store.completeRetrievalWithEmptyCache()
         })
     }
     
@@ -88,7 +88,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         sut.load { _ in }
-        store.completeRetrievalEmptyCache()
+        store.completeRetrievalWithEmptyCache()
         
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -138,7 +138,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         sut?.load { receivedResults.append($0) }
         
         sut = nil
-        store.completeRetrievalEmptyCache()
+        store.completeRetrievalWithEmptyCache()
         
         XCTAssertTrue(receivedResults.isEmpty)
     }
