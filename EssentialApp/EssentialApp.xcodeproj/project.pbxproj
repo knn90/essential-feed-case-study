@@ -87,6 +87,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A64D592258E495500418916 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		6A74AECC258A646A00216877 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +132,7 @@
 		6A74AEEE258A646B00216877 /* EssentialAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				6A64D592258E495500418916 /* Helpers */,
 				6A74AEF1258A646B00216877 /* Info.plist */,
 				6ACC55B3258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift */,
 				6A64D58F258E3E4700418916 /* FeedImageDataLoaderWithFallbackCompositeTests.swift */,
