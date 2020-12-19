@@ -17,11 +17,11 @@ public class FeedLoaderWithFallbackComposite: FeedLoader {
     }
     
     public func load(completion: @escaping (FeedLoader.Result) -> Void) {
-        primary.load { [unowned self] result in
+        primary.load { [weak self] result in
             switch result {
             case .success: completion(result)
             case .failure:
-                self.fallback.load(completion: completion)
+                self?.fallback.load(completion: completion)
             }
         }
     }
