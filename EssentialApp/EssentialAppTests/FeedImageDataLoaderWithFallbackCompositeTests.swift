@@ -121,8 +121,6 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    
-    
     private class LoaderSpy: FeedImageDataLoader {
         
         private var messages = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
