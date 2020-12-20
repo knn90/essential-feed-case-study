@@ -25,6 +25,7 @@
 		6ACC55B4258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACC55B3258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift */; };
 		6ADB82E0258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADB82DF258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift */; };
 		6ADB82E4258EFE4E0086F3D2 /* FeedLoaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */; };
+		6ADB82E7258EFF170086F3D2 /* XCTestCase+FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADB82E6258EFF170086F3D2 /* XCTestCase+FeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		6ACC55B3258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderWithFallbackCompositeTests.swift; sourceTree = "<group>"; };
 		6ADB82DF258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderCacheDecoratorTests.swift; sourceTree = "<group>"; };
 		6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderStub.swift; sourceTree = "<group>"; };
+		6ADB82E6258EFF170086F3D2 /* XCTestCase+FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedLoader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				6A64D597258E4FAD00418916 /* XCTestCase+MemoryLeakTracking.swift */,
 				6A64D59A258E4FF400418916 /* SharedTestHelpers.swift */,
 				6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */,
+				6ADB82E6258EFF170086F3D2 /* XCTestCase+FeedLoader.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A64D59B258E4FF400418916 /* SharedTestHelpers.swift in Sources */,
+				6ADB82E7258EFF170086F3D2 /* XCTestCase+FeedLoader.swift in Sources */,
 				6A64D590258E3E4700418916 /* FeedImageDataLoaderWithFallbackCompositeTests.swift in Sources */,
 				6ACC55B4258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
 				6ADB82E0258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift in Sources */,
