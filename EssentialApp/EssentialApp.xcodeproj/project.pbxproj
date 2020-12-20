@@ -24,6 +24,7 @@
 		6A74AF16258A652500216877 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6A74AF12258A652500216877 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6ACC55B4258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACC55B3258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift */; };
 		6ADB82E0258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADB82DF258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift */; };
+		6ADB82E4258EFE4E0086F3D2 /* FeedLoaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		6A74AF12258A652500216877 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6ACC55B3258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderWithFallbackCompositeTests.swift; sourceTree = "<group>"; };
 		6ADB82DF258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderCacheDecoratorTests.swift; sourceTree = "<group>"; };
+		6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderStub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				6A64D597258E4FAD00418916 /* XCTestCase+MemoryLeakTracking.swift */,
 				6A64D59A258E4FF400418916 /* SharedTestHelpers.swift */,
+				6ADB82E3258EFE4E0086F3D2 /* FeedLoaderStub.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				6A64D590258E3E4700418916 /* FeedImageDataLoaderWithFallbackCompositeTests.swift in Sources */,
 				6ACC55B4258B59350005D953 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
 				6ADB82E0258EFA360086F3D2 /* FeedLoaderCacheDecoratorTests.swift in Sources */,
+				6ADB82E4258EFE4E0086F3D2 /* FeedLoaderStub.swift in Sources */,
 				6A64D598258E4FAD00418916 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
