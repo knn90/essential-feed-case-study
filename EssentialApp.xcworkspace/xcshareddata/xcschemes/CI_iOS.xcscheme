@@ -86,6 +86,11 @@
                BlueprintName = "EssentialFeedCacheIntegrationTests"
                ReferencedContainer = "container:EssentialFeed/EssentialFeed.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "EssentialFeedCacheIntegrationTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO"
@@ -97,6 +102,11 @@
                BlueprintName = "EssentialFeediOSTests"
                ReferencedContainer = "container:EssentialFeed/EssentialFeed.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "FeedSnapshotTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO"
