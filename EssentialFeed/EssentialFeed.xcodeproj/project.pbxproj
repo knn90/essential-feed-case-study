@@ -293,17 +293,16 @@
 			children = (
 				6A02F13F2511110300313C5F /* LoadFeedFromRemoteUseCaseTests.swift */,
 				6A895A25256F9D840098D1B8 /* LoadFeedImageDataFromRemoteUseCaseTests.swift */,
-				6A21971525BBEA580068A25C /* LoadImageCommentsFromRemoteUseCaseTests.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
 		};
-		6A21972A25BBF2FA0068A25C /* Image Comment Feature */ = {
+		6A21972A25BBF2FA0068A25C /* Image Comments Feature */ = {
 			isa = PBXGroup;
 			children = (
 				6A21972B25BBF3150068A25C /* ImageComment.swift */,
 			);
-			path = "Image Comment Feature";
+			path = "Image Comments Feature";
 			sourceTree = "<group>";
 		};
 		6A2723D12562C334007F6243 /* Feed UI */ = {
@@ -467,6 +466,23 @@
 			path = "Share API Infra";
 			sourceTree = "<group>";
 		};
+		6A88FBE225BD659600F7024E /* Image Comments API */ = {
+			isa = PBXGroup;
+			children = (
+				6A21971C25BBEBB00068A25C /* RemoteImageCommentsLoader.swift */,
+				6A21972325BBEC3C0068A25C /* ImageCommentsMapper.swift */,
+			);
+			path = "Image Comments API";
+			sourceTree = "<group>";
+		};
+		6A88FBED25BD65B800F7024E /* Image Comments API */ = {
+			isa = PBXGroup;
+			children = (
+				6A21971525BBEA580068A25C /* LoadImageCommentsFromRemoteUseCaseTests.swift */,
+			);
+			path = "Image Comments API";
+			sourceTree = "<group>";
+		};
 		6A8B7F3025411FD500A2C9D2 /* Feed Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,8 +553,6 @@
 				6A03EC742518D4B6009360DF /* FeedItemMapper.swift */,
 				6AB402C3254183A5002A7F87 /* RemoteFeedItem.swift */,
 				6AAA877F2572A28000BF86EF /* RemoteFeedImageDataLoader.swift */,
-				6A21971C25BBEBB00068A25C /* RemoteImageCommentsLoader.swift */,
-				6A21972325BBEC3C0068A25C /* ImageCommentsMapper.swift */,
 			);
 			path = "Feed API";
 			sourceTree = "<group>";
@@ -584,9 +598,10 @@
 		6AED9C6E250FBE2200A3F327 /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
+				6A88FBE225BD659600F7024E /* Image Comments API */,
 				6A88FBD925BD297000F7024E /* Shared API Infra */,
 				6A88FBD825BD295300F7024E /* Shared API */,
-				6A21972A25BBF2FA0068A25C /* Image Comment Feature */,
+				6A21972A25BBF2FA0068A25C /* Image Comments Feature */,
 				6A332608256E5BA3009E04B6 /* Feed Presentation */,
 				6A8B7F3025411FD500A2C9D2 /* Feed Cache */,
 				6AB491A225126053008C86E0 /* Feed API */,
@@ -600,6 +615,7 @@
 		6AED9C79250FBE2200A3F327 /* EssentialFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				6A88FBED25BD65B800F7024E /* Image Comments API */,
 				6A88FBDC25BD29ED00F7024E /* Share API Infra */,
 				6A88FBDA25BD29D600F7024E /* Shared API */,
 				6A3325E6256E532C009E04B6 /* Feed Presentation */,
