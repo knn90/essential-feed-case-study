@@ -75,7 +75,7 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
             })
         }
     }
-    `
+
     //MARK: - Helpers
     private func makeSUT(url: URL = URL(string: "http://a-url.com")!, file: StaticString = #file, line: UInt = #line) -> (sut: RemoteImageCommentsLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
