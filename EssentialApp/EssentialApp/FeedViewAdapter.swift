@@ -14,7 +14,8 @@ final class FeedViewAdapter: FeedView {
     private weak var feedViewController: FeedViewController?
     private var imageLoader: (URL) -> FeedImageDataLoader.Publisher
     
-    init(feedViewController: FeedViewController, imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) {
+    init(feedViewController: FeedViewController,
+         imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) {
         self.feedViewController = feedViewController
         self.imageLoader = imageLoader
     }
