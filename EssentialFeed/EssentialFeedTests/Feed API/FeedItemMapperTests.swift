@@ -9,7 +9,7 @@
 import XCTest
 import EssentialFeed
 
-class FeedItemMapper: XCTestCase {
+class FeedItemMapperTests: XCTestCase {
     func test_map_throwsErrorOnNon200HTTPResponse() throws {
         let json = makeItemJSON([])
         let samples = [199, 201, 300, 400, 500]
