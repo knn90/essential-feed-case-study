@@ -1,5 +1,5 @@
 //
-//  LoadImageCommentsFromRemoteUseCaseTests.swift
+//  ImageCommentsMapperTests.swift
 //  EssentialFeedTests
 //
 //  Created by Khoi Nguyen on 23/1/21.
@@ -9,18 +9,18 @@
 import XCTest
 import EssentialFeed
 
-class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
+class ImageCommentsMapperTests: XCTestCase {
     
-    func test_load_deliversErrorOnNon2xxHTTPResponse() {
+    func test_load_deliversErrorOnNon2xxHTTPResponse() throws {
         let (sut, client) = makeSUT()
+        let json = makeItemJSON([])
         
         let samples = [199, 150, 300, 400, 500]
         
-        samples.enumerated().forEach { (index, code) in
-            expect(sut, toCompleteWithResult: failure(.invalidData), when: {
-                let data = makeItemJSON([])
-                client.complete(withStatusCode: code, data: data, at: index)
-            })
+        try samples.enumerated().forEach { (index, code) in
+            XCTAssertThrowsError(
+                try FeedItemMapper.map(json, HTTPURLResponse(statusCode: code))
+            )
         }
     }
     
@@ -135,4 +135,10 @@ class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
+}
+
+private extension HTTPURLResponse {
+    convenience init(statusCode: Int) {
+        self.init(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+    }
 }
