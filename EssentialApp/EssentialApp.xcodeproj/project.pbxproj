@@ -13,7 +13,7 @@
 		6A035A592591A0FF0085E1FB /* WeakRefVirtualProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A552591A0FF0085E1FB /* WeakRefVirtualProxy.swift */; };
 		6A035A5A2591A0FF0085E1FB /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A582591A0FF0085E1FB /* FeedUIComposer.swift */; };
 		6A035A5C2591A0FF0085E1FB /* FeedImageLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A572591A0FF0085E1FB /* FeedImageLoaderPresentationAdapter.swift */; };
-		6A035A5D2591A0FF0085E1FB /* FeedLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A542591A0FE0085E1FB /* FeedLoaderPresentationAdapter.swift */; };
+		6A035A5D2591A0FF0085E1FB /* LoadResourcePresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A542591A0FE0085E1FB /* LoadResourcePresentationAdapter.swift */; };
 		6A035A5E2591A0FF0085E1FB /* FeedViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A562591A0FF0085E1FB /* FeedViewAdapter.swift */; };
 		6A035A742591A13F0085E1FB /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A722591A13E0085E1FB /* UIButton+TestHelpers.swift */; };
 		6A035A752591A13F0085E1FB /* FeedImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A035A6D2591A13E0085E1FB /* FeedImageCell+TestHelpers.swift */; };
@@ -69,7 +69,7 @@
 		6A03281A259083BC00C7EEBA /* FeedImageDataLoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoaderSpy.swift; sourceTree = "<group>"; };
 		6A03281D2590845900C7EEBA /* XCTestCase+FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedImageDataLoader.swift"; sourceTree = "<group>"; };
 		6A035A4D25919A1D0085E1FB /* SceneDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateTests.swift; sourceTree = "<group>"; };
-		6A035A542591A0FE0085E1FB /* FeedLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
+		6A035A542591A0FE0085E1FB /* LoadResourcePresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadResourcePresentationAdapter.swift; sourceTree = "<group>"; };
 		6A035A552591A0FF0085E1FB /* WeakRefVirtualProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakRefVirtualProxy.swift; sourceTree = "<group>"; };
 		6A035A562591A0FF0085E1FB /* FeedViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewAdapter.swift; sourceTree = "<group>"; };
 		6A035A572591A0FF0085E1FB /* FeedImageLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				6A035A582591A0FF0085E1FB /* FeedUIComposer.swift */,
 				6A035A552591A0FF0085E1FB /* WeakRefVirtualProxy.swift */,
 				6A035A572591A0FF0085E1FB /* FeedImageLoaderPresentationAdapter.swift */,
-				6A035A542591A0FE0085E1FB /* FeedLoaderPresentationAdapter.swift */,
+				6A035A542591A0FE0085E1FB /* LoadResourcePresentationAdapter.swift */,
 				6A035A562591A0FF0085E1FB /* FeedViewAdapter.swift */,
 				6A74AED8258A646A00216877 /* AppDelegate.swift */,
 				6A74AEDA258A646A00216877 /* SceneDelegate.swift */,
@@ -306,7 +306,7 @@
 				6A74AED9258A646A00216877 /* AppDelegate.swift in Sources */,
 				6A74AEDB258A646A00216877 /* SceneDelegate.swift in Sources */,
 				6A035A592591A0FF0085E1FB /* WeakRefVirtualProxy.swift in Sources */,
-				6A035A5D2591A0FF0085E1FB /* FeedLoaderPresentationAdapter.swift in Sources */,
+				6A035A5D2591A0FF0085E1FB /* LoadResourcePresentationAdapter.swift in Sources */,
 				6A035A5C2591A0FF0085E1FB /* FeedImageLoaderPresentationAdapter.swift in Sources */,
 				6A035A5A2591A0FF0085E1FB /* FeedUIComposer.swift in Sources */,
 			);
