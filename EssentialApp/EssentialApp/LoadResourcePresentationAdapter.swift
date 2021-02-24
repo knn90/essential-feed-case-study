@@ -13,24 +13,24 @@ import Combine
 final class LoadResourcePresentationAdapter<Resource, View: ResourceView> {
     private let loader: () -> AnyPublisher<Resource, Error>
     private var cancellable: Cancellable?
-    var feedPresenter: LoadResourcePresenter<Resource, View>?
+    var presenter: LoadResourcePresenter<Resource, View>?
     
     init(loader: @escaping () -> AnyPublisher<Resource, Error>) {
         self.loader = loader
     }
     
     func loadResource() {
-        feedPresenter?.didStartLoading()
+        presenter?.didStartLoading()
         cancellable = loader()
             .dispatchOnMainQueue()
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished: break
                 case let .failure(error):
-                    self?.feedPresenter?.didFinishLoading(with: error)
+                    self?.presenter?.didFinishLoading(with: error)
                 }
             }, receiveValue: { [weak self] resource in
-                self?.feedPresenter?.didFinishLoading(with: resource)
+                self?.presenter?.didFinishLoading(with: resource)
             })
     }
 }
@@ -38,5 +38,16 @@ final class LoadResourcePresentationAdapter<Resource, View: ResourceView> {
 extension LoadResourcePresentationAdapter: FeedViewControllerDelegate {
     func didRequestFeedRefresh() {
         loadResource()
+    }
+}
+
+extension LoadResourcePresentationAdapter: FeedImageCellControllerDelegate {
+    func didRequestImage() {
+        loadResource()
+    }
+    
+    func didCancelImageRequest() {
+        cancellable?.cancel()
+        cancellable = nil
     }
 }
