@@ -12,8 +12,6 @@ public protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
 
-
-
 public final class FeedPresenter {
     private let feedView: FeedView
     private let loadingView: ResourceLoadingView
