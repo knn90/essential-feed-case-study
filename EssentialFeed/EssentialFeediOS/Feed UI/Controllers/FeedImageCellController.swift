@@ -14,7 +14,7 @@ public protocol FeedImageCellControllerDelegate {
     func didCancelImageRequest()
 }
 
-public final class FeedImageCellController: NSObject, ResourceView, ResourceLoadingView, ResourceErrorView {
+public final class FeedImageCellController: CellController, ResourceView, ResourceLoadingView, ResourceErrorView {
     public typealias ResourceViewModel = UIImage
     private let viewModel: FeedImageViewModel
     private var cell: FeedImageCell?
@@ -36,7 +36,8 @@ public final class FeedImageCellController: NSObject, ResourceView, ResourceLoad
     public func display(_ viewModel: ResourceErrorViewModel) {
         cell?.feedImageRetryButton.isHidden = viewModel.message == nil
     }
-    func view(in tableView: UITableView) -> FeedImageCell {
+    
+    public func view(in tableView: UITableView) -> UITableViewCell {
         cell = tableView.dequeueResuableCell()
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
@@ -46,11 +47,11 @@ public final class FeedImageCellController: NSObject, ResourceView, ResourceLoad
         return cell!
     }
     
-    func preload() {
+    public func preload() {
         delegate.didRequestImage()
     }
     
-    func cancelLoad() {
+    public func cancelLoad() {
         releaseCellForReuse()
         delegate.didCancelImageRequest()
     }
