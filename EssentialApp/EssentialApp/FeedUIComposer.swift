@@ -35,7 +35,7 @@ public final class FeedUIComposer {
         let bundle = Bundle(for: ListViewController.self)
         let storyBoard = UIStoryboard(name: "Feed", bundle: bundle)
         let feedViewController = storyBoard.instantiateInitialViewController() as! ListViewController
-        feedViewController.title = FeedPresenter.title
+        feedViewController.title = title
         return feedViewController
     }
 }
