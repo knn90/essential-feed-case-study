@@ -50,4 +50,3 @@ extension Date {
         return Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
     }
 }
-
