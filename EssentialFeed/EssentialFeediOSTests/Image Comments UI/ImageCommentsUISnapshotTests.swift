@@ -58,6 +58,7 @@ class ImageCommentsUISnapshotTests: XCTestCase {
                     username: "a username")
             )
             
+            
         ]
     }
 }
