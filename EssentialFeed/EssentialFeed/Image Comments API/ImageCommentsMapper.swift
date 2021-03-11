@@ -15,7 +15,7 @@ public final class ImageCommentsMapper {
         private struct Item: Decodable {
             let id: UUID
             let message: String
-            let create_at: Date
+            let created_at: Date
             let author: Author
         }
         
@@ -25,7 +25,7 @@ public final class ImageCommentsMapper {
         
         var comments: [ImageComment] {
             return items.map {
-                ImageComment(id: $0.id, message: $0.message, createAt: $0.create_at, username: $0.author.username)
+                ImageComment(id: $0.id, message: $0.message, createAt: $0.created_at, username: $0.author.username)
             }
         }
     }
