@@ -78,7 +78,7 @@ class ImageCommentsMapperTests: XCTestCase {
         let itemJSON: [String: Any] = [
             "id": id.uuidString,
             "message": message,
-            "create_at": createAt.iso8601String,
+            "created_at": createAt.iso8601String,
             "author": [
                 "username": username
             ]   
