@@ -1,6 +1,6 @@
 # Essential Feed App – Image Feed Feature
 
-[![Build Status](https://travis-ci.com/knn90/essential-feed-case-study.svg?branch=master)](https://travis-ci.com/knn90/essential-feed-case-study)
+[![CI-iOS](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml)
 
 ## BDD Specs
 
