@@ -1,6 +1,6 @@
 # Essential Feed App – Image Feed Feature
 
-[![CI-iOS](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml)
+[![CI-iOS](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml/badge.svg)](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-iOS.yml) [![CI-macOS](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-macOS.yml/badge.svg)](https://github.com/knn90/essential-feed-case-study/actions/workflows/CI-macOS.yml)
 
 ## BDD Specs
 
